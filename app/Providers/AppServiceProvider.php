@@ -14,6 +14,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Schema::defaultStringLength(191);
+        
+        // HTTPSアクセスに固定する
+        \URL::forceScheme('https');
     }
 
     /**

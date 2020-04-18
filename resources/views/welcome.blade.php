@@ -2,7 +2,9 @@
 
 @section('content')
     @if (Auth::check())
-        {{ Auth::user()->name }}
+     @if (count($instruments) > 0)
+        @include('instruments.instruments')
+     @endif
     @else
         <div class="center jumbotron">
             <div class="text-center">
