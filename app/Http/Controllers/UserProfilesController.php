@@ -24,8 +24,10 @@ class UserProfilesController extends Controller
     
     public function show($id)
     {
-        $instruments = Instrument::orderBy('created_at', 'desc')->paginate(10);
+       
+        
         $user = User::find($id);
+        $instruments = $user->feed_instruments()->orderBy('created_at', 'desc')->paginate(10);
 
         return view('user_profiles.show', [
             'user' => $user,

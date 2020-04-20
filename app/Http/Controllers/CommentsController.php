@@ -17,28 +17,28 @@ class CommentsController extends Controller
             
         
           
-       $instrument = Instrument::where('user_id', $request->instrument_id)->first();
+       $instrument = Instrument::find($request->instrument_id);
        $request->user()->comments()->create([
             'comment' => $request->comment,
             'instrument_id' => $request->instrument_id,
         ]);
         
         
-        return redirect('instruments/' . $instrument->user_id);
+        return redirect('instruments/' . $instrument->id);
         
     }
     
     
     public function destroy($id)
     {
-        $instrument = Instrument::where('user_id', $id)->first();
-        $comment = Comment::where('user_id', \Auth::user()->id)->first();
+        $comment = Comment::find($id);
+        $instrumentId = $comment->instrument_id;
 
         if (\Auth::id() === $comment->user_id) {
             $comment->delete();
         }
 
-        return redirect('instruments/' . $instrument->user_id);
+        return redirect('instruments/' . $instrumentId);
        
     }
 }

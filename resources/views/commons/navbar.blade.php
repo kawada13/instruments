@@ -13,7 +13,7 @@
                    <li class="nav-item">{!! link_to_route('instruments.create', '新規メッセージの投稿', [], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item">{!! link_to_route('user_profiles.index', 'Users', [], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"></a>
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"></a>
                         <ul class="dropdown-menu dropdown-menu-right">
                                 <li class="dropdown-item">{!! link_to_route('user_profiles.show', 'My profile', ['id' => Auth::id()]) !!}</li>
                                 <li class="dropdown-divider"></li>

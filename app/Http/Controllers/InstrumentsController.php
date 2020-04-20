@@ -25,7 +25,7 @@ class InstrumentsController extends Controller
             
             $user = \Auth::user();
             
-            $instruments = $user->feed_instruments()->orderBy('created_at', 'desc')->paginate(10);
+             $instruments = Instrument::orderBy('created_at', 'desc')->paginate(10);
             
             $data = [
                 'user' => $user,
@@ -43,11 +43,10 @@ class InstrumentsController extends Controller
     public function show($id)
     {
         $instrument = Instrument::find($id);
-        $comment = Comment::where('instrument_id', $id)->first();
+        
 
         return view('instruments.show', [
             'instrument' => $instrument,
-            'comment' => $comment,
             
         ]);
     }

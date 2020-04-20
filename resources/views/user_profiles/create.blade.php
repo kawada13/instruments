@@ -30,7 +30,7 @@
                 
                 <div class="form-group">
                     {!! Form::label('comment', '一言') !!}
-                    {!! Form::text('comment', old('comment'), ['class' => 'form-control']) !!}
+                    {!! Form::textarea('comment', old('comment'), ['class' => 'form-control']) !!}
                 </div>
 
                 {!! Form::submit('登録', ['class' => 'btn btn-primary btn-block']) !!}

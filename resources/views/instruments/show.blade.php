@@ -1,27 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-<p>{!! link_to_route('user_profiles.show', $instrument->user->user_profile->name, ['id' => $instrument->user->user_profile->user_id]) !!}の楽器詳細</p>
 
-<ul>
-<p>機材名</p>
-<li>{{ $instrument->instrument_name }}</li> 
+<h1>{!! link_to_route('user_profiles.show', $instrument->user->user_profile->name, ['id' => $instrument->user->user_profile->user_id]) !!}の{{ $instrument->instrument_name }}詳細</h1>
 
-<p>メーカー</p>
-<li>{{ $instrument->maker }}</li> 
+<div class="card" style="width: 18rem;">
+  <img src="{!! Storage::disk('s3')->url($instrument->instrument_image) !!}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">機材名</h5>
+    <p class="card-text">{{ $instrument->instrument_name }}</p>
+  </div>
+</div>
 
-<p>種別</p>
-<li>{{ $instrument->type }}</li> 
 
-<p>価格</p>
-<li>{{ $instrument->price }}</li> 
+<table class="table table-bordered">
+        <tr>
+            <th>メーカー</th>
+            <td>{{ $instrument->maker }}</td>
+        </tr>
+        <tr>
+            <th>種別</th>
+            <td>{{ $instrument->type }}</td>
+        </tr>
+        <tr>
+            <th>価格</th>
+            <td>{{ $instrument->price }}</td>
+        </tr>
+        <tr>
+            <th>機材コメント</th>
+            <td>{{ $instrument->comment }}</td>
+        </tr>
 
-<p>機材コメント</p>
-<li>{{ $instrument->comment }}</li> 
+</table>
 
-<img src="{!! Storage::disk('s3')->url($instrument->instrument_image) !!}">
-    
-</ul>
+
 
 @if ($instrument->user_id == \Auth::user()->id)
 {!! Form::open(['route' => 'instruments.image_upload', 'files' => true]) !!}
@@ -50,22 +62,27 @@
 {!! Form::close() !!}
 
 
-
 @if (count($instrument->comments) > 0)
-       
 @foreach ($instrument->comments as $comment)
-        <p>{{ $comment->comment }}</p>
-        
-        
+<li class="list-group-item">
+<div class="py-3 w-100 d-flex">
+   <img src="{!! Storage::disk('s3')->url($comment->user->user_profile->profile_image) !!}" class="rounded-circle" width="50" height="50">
+   <div class="ml-2 d-flex flex-column">
+      <p class="mb-0">{{ $comment->user->user_profile->name }}</p>
+   </div>
+   <div class="d-flex justify-content-end flex-grow-1">
+      <p class="mb-0 text-secondary">{{ $comment->created_at->format('Y-m-d H:i') }}</p>
+   </div>
+</div>
+<div class="py-3">
+   {!! nl2br(e($comment->comment)) !!}
+</div>
 @if ($comment->user_id == \Auth::user()->id)
-{!! Form::open(['route' => ['comments.destroy', $instrument->id], 'method' => 'delete']) !!}
+{!! Form::open(['route' => ['comments.destroy', $comment->id], 'method' => 'delete']) !!}
      {!! Form::submit('コメント削除', ['class' => 'btn btn-danger']) !!}
 {!! Form::close() !!}
-@endif
-
-
+@endif               
 @endforeach
-
 @endif
 
 
