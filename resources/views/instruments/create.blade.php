@@ -38,7 +38,7 @@
                 </div>
 
 
-                {!! Form::submit('登録', ['class' => 'btn btn-primary btn-block']) !!}
+                {!! Form::submit('作成', ['class' => 'btn btn-primary btn-block']) !!}
             {!! Form::close() !!}
         </div>
     </div>
